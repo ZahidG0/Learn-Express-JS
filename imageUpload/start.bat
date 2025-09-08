@@ -1,0 +1,13 @@
+@echo off
+echo Starting Image Upload Server and Client...
+echo.
+echo Starting server on port 5000...
+start "Server" cmd /k "node index.js"
+echo.
+echo Starting client on port 5173...
+start "Client" cmd /k "cd client && npm run dev"
+echo.
+echo Both server and client should be starting...
+echo Server: http://localhost:5000
+echo Client: http://localhost:5173
+pause
