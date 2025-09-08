@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload</title>
+  </head>
+  <body>
+    <h1>Upload a File</h1>
+    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="Images" required />
+      <button type="submit">Upload</button>
+    </form>
+
+    <!-- Uploaded Image Showing -->
+    <div>
+      <h2>Uploaded Image:</h2>
+      <img id="uploadedImage" src="" alt="No image uploaded yet" style="max-width: 300px; max-height: 300px;" />
+    </div>
+
+    <script>
+      document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        fetch('/upload', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.filePath) {
+            document.getElementById('uploadedImage').src = data.filePath;
+          } else {
+            alert('File upload failed');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while uploading the file.');
+        });
+      });
+    </script>
+  </body>
+</html>
